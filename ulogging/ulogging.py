@@ -127,39 +127,41 @@ class Logger():
         return len(self.handlers) > 0
 
     def debug(self, message, *args, **kwargs):
-        self.log(DEBUG, message, args, kwargs)
+        self.log(DEBUG, message, *args, **kwargs)
     
     def info(self, message, *args, **kwargs):
-        self.log(INFO, message, args, kwargs)
+        self.log(INFO, message, *args, **kwargs)
     
     def warning(self, message, *args, **kwargs):
-        self.log(WARNING, message, args, kwargs)
+        self.log(WARNING, message, *args, **kwargs)
     
     def error(self, message, *args, **kwargs):
-        self.log(ERROR, message, args, kwargs)
+        self.log(ERROR, message, *args, **kwargs)
     
     def critical(self, message, *args, **kwargs):
-        self.log(CRITICAL, message, args, kwargs)
+        self.log(CRITICAL, message, *args, **kwargs)
 
     def log(self, level, message, *args, **kwargs):
         if (level >= self.level):
+            if args and isinstance(args[0], dict):
+                    args = args[0]
             for h in self.handlers:
-                h.emit(Record(self.name, level, message))
+                h.emit(Record(self.name, level, message % args))
 
 def debug(message, *args, **kwargs):
-    getLogger().log(DEBUG, message, args, kwargs)
+    getLogger().log(DEBUG, message, *args, **kwargs)
 
 def info(message, *args, **kwargs):
-    getLogger().log(INFO, message, args, kwargs)
+    getLogger().log(INFO, message, *args, **kwargs)
 
 def warning(message, *args, **kwargs):
-    getLogger().log(WARNING, message, args, kwargs)
+    getLogger().log(WARNING, message, *args, **kwargs)
 
 def error(message, *args, **kwargs):
-    getLogger().log(ERROR, message, args, kwargs)
+    getLogger().log(ERROR, message, *args, **kwargs)
 
 def critical(message, *args, **kwargs):
-    getLogger().log(CRITICAL, message, args, kwargs)
+    getLogger().log(CRITICAL, message, *args, **kwargs)
 
 def shutdown():
     for k, logger in loggers.items():
