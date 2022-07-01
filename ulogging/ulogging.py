@@ -88,7 +88,7 @@ class FileHandler(StreamHandler):
         self.stream.close()
 
 class Record:
-    def __init__(self, name, level, message):
+    def set(self, name, level, message):
         self.name = name
         self.level = level
         self.message = message
@@ -116,6 +116,7 @@ class Logger():
         self.name = name
         self.level = NOTSET
         self.handlers = []
+        self.record = Record()
 
     def setLevel(self, level):
         self.level = level
@@ -146,7 +147,8 @@ class Logger():
             if args and isinstance(args[0], dict):
                     args = args[0]
             for h in self.handlers:
-                h.emit(Record(self.name, level, message % args))
+                self.record.set(self.name, level, message % args)
+                h.emit(self.record)
 
 def debug(message, *args, **kwargs):
     getLogger().log(DEBUG, message, *args, **kwargs)
