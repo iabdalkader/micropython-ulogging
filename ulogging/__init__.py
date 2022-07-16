@@ -22,11 +22,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 from .ulogging import Logger
+from .ulogging import Handler
 from .ulogging import Formatter
 from .ulogging import FileHandler
 from .ulogging import StreamHandler
 from .ulogging import DEBUG, INFO, WARNING, ERROR, CRITICAL
-from .ulogging import debug, info, warning, error, critical
+from .ulogging import debug, info, warning, error, critical, exception
 from .ulogging import shutdown
 from .ulogging import getLogger
 from .ulogging import basicConfig

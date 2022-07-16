@@ -142,6 +142,12 @@ class Logger():
     def critical(self, message, *args, **kwargs):
         self.log(CRITICAL, message, *args, **kwargs)
 
+    def exception(self, message, *args, **kwargs):
+        self.log(ERROR, message, *args, **kwargs)
+        if hasattr(sys, "exc_info"):
+            for h in filter(lambda h: isinstance(h, StreamHandler), self.handlers):
+                sys.print_exception(sys.exc_info()[1], h.stream)
+
     def log(self, level, message, *args, **kwargs):
         if (level >= self.level):
             if args and isinstance(args[0], dict):
@@ -164,6 +170,9 @@ def error(message, *args, **kwargs):
 
 def critical(message, *args, **kwargs):
     getLogger().log(CRITICAL, message, *args, **kwargs)
+
+def exception(message, *args, **kwargs):
+    getLogger().exception(message, *args, **kwargs)
 
 def shutdown():
     for k, logger in loggers.items():
