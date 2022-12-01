@@ -42,10 +42,10 @@ regex = re.compile(r"%(-?[a-zA-Z])")
 
 def strftime(datefmt, ts):
     return regex.sub(r"%(\1)s", datefmt) % {
-        "a" : WDAY[ts[TS_WDAY]][0:3],
-        "A" : WDAY[ts[TS_WDAY]],
-        "b" : MDAY[ts[TS_MON]][0:3],
-        "B" : MDAY[ts[TS_MON]],
+        "a" : WDAY[ts[TS_WDAY] - 1][0:3],
+        "A" : WDAY[ts[TS_WDAY] - 1],
+        "b" : MDAY[ts[TS_MON] - 1][0:3],
+        "B" : MDAY[ts[TS_MON] - 1],
         "d" : f"{ts[TS_MDAY]:02d}",
         "H" : f"{ts[TS_HOUR]:02d}",
         "I" : f"{ts[TS_HOUR]%12:02d}",
